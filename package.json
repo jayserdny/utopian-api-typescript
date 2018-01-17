@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Utopian Api Typescript version",
   "main": "dist/index.js",
-  "types" : "dist/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -26,8 +26,13 @@
   },
   "homepage": "https://github.com/jayserdny/utopian-api-typescript#readme",
   "devDependencies": {
+    "@types/es6-promise": "^3.3.0",
     "chai": "^4.1.2",
     "mocha": "^4.1.0",
     "typescript": "^2.6.2"
+  },
+  "dependencies": {
+    "@types/request": "^2.0.11",
+    "request": "^2.83.0"
   }
 }
