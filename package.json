@@ -1,0 +1,29 @@
+{
+  "name": "utopian-api-typescript",
+  "version": "1.0.0",
+  "description": "Utopian Api Typescript version",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jayserdny/utopian-api-typescript.git"
+  },
+  "keywords": [
+    "Typescript",
+    "steem",
+    "utopian",
+    "blockchain",
+    "npm"
+  ],
+  "author": "Jayser Mendez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jayserdny/utopian-api-typescript/issues"
+  },
+  "homepage": "https://github.com/jayserdny/utopian-api-typescript#readme",
+  "devDependencies": {
+    "typescript": "^2.6.2"
+  }
+}
