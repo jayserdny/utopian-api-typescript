@@ -5,8 +5,6 @@ A Typescript module for Utopian SDK. Originally written by [wehmoen](https://git
 ## Installation 
 ```sh
 npm install utopian-api-ts --save
-yarn add utopian-api-ts
-bower install utopian-api-ts --save
 ```
 ## Usage
 ### Javascript
