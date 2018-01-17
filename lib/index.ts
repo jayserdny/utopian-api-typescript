@@ -123,9 +123,16 @@ export function getPosts(options: Options): Promise<Posts> {
         getURL(ENDPOINT_POSTS.concat('?').concat(encodeQueryData(options))).then((data: any) => {
             resolve(JSON.parse(data));
         }).catch((err) => reject(err));
-    })
-}
+    });
+};
 
+/**
+ * @method: Return list of pending post by moderator and category in a given query
+ * @argument {string} moderator: moderator to query
+ * @argument {string} category: category to query
+ * @argument {Options} options: query for the posts
+ * @returns Promise object array of posts
+ */
 export function getPendingPostsByModeratorAndCategory(moderator: string, category: string, options: Options): Promise<Array<Post>> {
     return new Promise<Array<Post>>((resolve, reject) => {
         getPosts(Object.assign({
@@ -142,13 +149,55 @@ export function getPendingPostsByModeratorAndCategory(moderator: string, categor
             reject(err);
         });
     });
-}
+};
 
+/**
+ * @method: Return count of pending post by a given category in a given query
+ * @argument {string} category: category to query
+ * @argument {Options} options: query for the posts
+ * @returns Promise type number
+ */
+export function getPendingPostsByCategory(category: string, options: Options): Promise<number> {
+    return new Promise<number>((resolve, reject) => {
+        getPosts(Object.assign({
+            sortBy: 'created',
+            filterBy: 'review',
+            type: category
+        }, options)).then((posts: Posts) => {
+            resolve(posts.total);
+        }).catch((err: Error) => {
+            reject(err);
+        });
+    });
+};
+
+/**
+ * @method: Return count of pending post by a given query
+ * @argument {Options} options: query for the posts
+ * @returns Promise type number
+ */
+export function getPendingPosts(options: Options): Promise<number> {
+    return new Promise<number>((resolve, reject) => {
+        getPosts(Object.assign({
+             sortBy: 'created',
+            filterBy: 'review'
+        }, options)).then((posts: Posts) => {
+            resolve(posts.total);
+
+        }).catch((err: Error) => {
+            reject(err);
+        });
+    });
+};
+
+/**
+ * INTERFACES AREA
+ */
 
 export interface Posts {
     total: number;
     results: Array<Post>;
-}
+};
 
 export interface Post {
     moderator: string;
@@ -213,9 +262,7 @@ export interface Post {
     reblogged_by: Array<string>;
     beneficiaries: Array<Object>;
     active_votes: Array<Object>
-
-
-}
+};
 
 export interface Options {
     limit?: number;
@@ -225,7 +272,6 @@ export interface Options {
     filterBy?: string;
     status?: string;
     type?: string;
-
 };
 
 export interface Sponsors {
