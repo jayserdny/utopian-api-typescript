@@ -1,4 +1,4 @@
-# Utopian SDK Typescript [![Build Status](https://travis-ci.org/jayserdny/utopian-api-typescript.svg?branch=v1.0.2)](https://travis-ci.org/jayserdny/utopian-api-typescript)
+# Utopian SDK Typescript [![Build Status](https://travis-ci.org/jayserdny/utopian-api-typescript.svg?branch=v1.0.4)](https://travis-ci.org/jayserdny/utopian-api-typescript)
 
 A Typescript module for Utopian SDK. Originally written by [wehmoen](https://github.com/wehmoen)
 
