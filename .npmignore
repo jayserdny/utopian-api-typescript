@@ -12,3 +12,5 @@ CVS
 npm-debug.log
 .idea
 lib/
+tsconfig.json
+src

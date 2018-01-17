@@ -2,19 +2,17 @@
     "compileOnSave": true,
     "compilerOptions": {
         "target": "es6",
+        "outDir": "./dist",
+        "declaration": true,
         "module": "commonjs",
         "strict": true,
         "noEmit": true,
         "sourceMap": true,
-        "outDir": "dist",
-        "moduleResolution": "Node",
         "strictNullChecks": false,
-        "declaration": true,
-        "lib": ["es2017", "dom"],
         "types" : [ "node" ]
     },
     "include": [
-        "lib/**/*.ts"
+        "src/**/*"
     ],
     "exclude": [
         "node_modules",
