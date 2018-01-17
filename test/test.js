@@ -5,7 +5,6 @@ describe('Utopian api test', () => {
     it('Should return an array', () => {
         return utopian.getModerators().then(function(data) {
             expect(data.total).to.be.an('number');
-        })
-        
+        });
     });
 });
