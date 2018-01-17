@@ -107,7 +107,7 @@ export function getSponsor(username: string): Promise<Sponsor> {
  * @argument {string}: query for the data
  * @returns Promise object array of posts
  */
-export function getPosts(options: Options): Promise<Array<Post>> {
+export function getPosts(options: Options): Promise<Posts> {
     if (!options) options = {};
 
     if (options.limit > 20 || options.limit < 1) {
@@ -119,11 +119,35 @@ export function getPosts(options: Options): Promise<Array<Post>> {
         options.skip = 0;
     }
 
-    return new Promise<Array<Post>>((resolve, reject) => {
+    return new Promise<Posts>((resolve, reject) => {
         getURL(ENDPOINT_POSTS.concat('?').concat(encodeQueryData(options))).then((data: any) => {
             resolve(JSON.parse(data));
         }).catch((err) => reject(err));
     })
+}
+
+export function getPendingPostsByModeratorAndCategory(moderator: string, category: string, options: Options): Promise<Array<Post>> {
+    return new Promise<Array<Post>>((resolve, reject) => {
+        getPosts(Object.assign({
+            section: 'all',
+            sortBy: 'created',
+            filterBy: 'review',
+            status: 'any',
+            type: category
+        }, options)).then((posts: Posts) => {
+            resolve(posts.results.filter((post: Post) => {
+                return post.moderator === moderator;
+            }));
+        }).catch((err: Error) => {
+            reject(err);
+        });
+    });
+}
+
+
+export interface Posts {
+    total: number;
+    results: Array<Post>;
 }
 
 export interface Post {
