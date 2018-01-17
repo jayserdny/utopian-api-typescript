@@ -14,3 +14,4 @@ npm-debug.log
 lib/
 tsconfig.json
 src
+test
