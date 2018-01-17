@@ -191,6 +191,40 @@ export function getPendingPosts(options: Options): Promise<number> {
 };
 
 /**
+ * @method: Return list of the pending post of the given moderator
+ * @argument {string} moderator: moderator to query
+ * @returns Promise object array of posts
+ */
+export function getPendingPostsByModerator(moderator: string): Promise<Posts> {
+    return new Promise<Posts>((resolve, reject) => {
+        getPosts({
+            section: 'all',
+            sortBy: 'created',
+            filterBy: 'review',
+            status: 'pending',
+            moderator: moderator,
+            type: 'all'
+        }).then((posts: Posts) => {
+            resolve(posts);
+        }).catch((err: Error) => {
+            reject(err);
+        });
+    });
+};
+
+export function getPendingPostsCount(): Promise<number> {
+    return new Promise<number>((resolve, reject) => {
+        getURL(ENDPOINT_POSTS.concat('?'.concat(encodeQueryData({filterBy: 'review', limit: 1, skip: 0}))))
+        .then((posts: any) => {
+            if (!posts) reject(false);
+            else resolve(JSON.parse(posts).total);
+        }).catch((err: Error) => {
+            reject(err);
+        });
+    })
+}
+
+/**
  * INTERFACES AREA
  */
 
@@ -265,6 +299,7 @@ export interface Post {
 };
 
 export interface Options {
+    moderator?: string;
     limit?: number;
     skip?: number;
     section?: string;
