@@ -127,7 +127,7 @@ export function getPosts(options: Options): Promise<Posts> {
 };
 
 /**
- * @method: Return list of pending post by moderator and category in a given query
+ * @method: Return list of pending posts by moderator and category in a given query
  * @argument {string} moderator: moderator to query
  * @argument {string} category: category to query
  * @argument {Options} options: query for the posts
@@ -152,7 +152,7 @@ export function getPendingPostsByModeratorAndCategory(moderator: string, categor
 };
 
 /**
- * @method: Return count of pending post by a given category in a given query
+ * @method: Return count of pending posts by a given category in a given query
  * @argument {string} category: category to query
  * @argument {Options} options: query for the posts
  * @returns Promise type number
@@ -172,7 +172,7 @@ export function getPendingPostsByCategory(category: string, options: Options): P
 };
 
 /**
- * @method: Return count of pending post by a given query
+ * @method: Return count of pending posts by a given query
  * @argument {Options} options: query for the posts
  * @returns Promise type number
  */
@@ -191,7 +191,7 @@ export function getPendingPosts(options: Options): Promise<number> {
 };
 
 /**
- * @method: Return list of the pending post of the given moderator
+ * @method: Return list of the pending posts of the given moderator
  * @argument {string} moderator: moderator to query
  * @returns Promise object array of posts
  */
@@ -212,6 +212,10 @@ export function getPendingPostsByModerator(moderator: string): Promise<Posts> {
     });
 };
 
+/**
+ * @method: Return count of all pending posts
+ * @returns Promise type number
+ */
 export function getPendingPostsCount(): Promise<number> {
     return new Promise<number>((resolve, reject) => {
         getURL(ENDPOINT_POSTS.concat('?'.concat(encodeQueryData({filterBy: 'review', limit: 1, skip: 0}))))
@@ -221,8 +225,24 @@ export function getPendingPostsCount(): Promise<number> {
         }).catch((err: Error) => {
             reject(err);
         });
-    })
-}
+    });
+};
+
+/**
+ * @method: Return count of all posts
+ * @returns Promise type number
+ */
+export function getTotalPostCount(): Promise<number> {
+    return new Promise<number>((resolve, reject) => {
+        getURL(ENDPOINT_POSTS.concat('?'.concat(encodeQueryData({limit: 1, skip: 0}))))
+        .then((posts: any) => {
+            if (!posts) reject(false);
+            else resolve(JSON.parse(posts).total);
+        }).catch((err: Error) => {
+            reject(err);
+        });
+    });
+};
 
 /**
  * INTERFACES AREA
