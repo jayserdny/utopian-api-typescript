@@ -29,7 +29,7 @@ const getURL = function(url: string) {
     }).catch((err: Error) => {
         throw err;
     });
-};
+}
 
 const encodeQueryData = function(parameters: any) {
     let ret = [];
@@ -49,7 +49,7 @@ export function getModerators(): Promise<Moderators> {
             resolve(JSON.parse(data));
         }).catch((err) => reject(err));
     });
-};
+}
 
 /**
  * @method: Return the return specific data from a moderator
@@ -68,7 +68,7 @@ export function getModerator(username: string): Promise<Moderator> {
             });
         });
     });
-};
+}
 
 /**
  * @method: Return the sponsors of Utopian
@@ -81,7 +81,7 @@ export function getSponsors(): Promise<Sponsors> {
             resolve(JSON.parse(data));
         }).catch((err) => reject(err));
     });
-};
+}
 
 /**
  * @method: Return the return specific data from a Sponsor
@@ -100,7 +100,7 @@ export function getSponsor(username: string): Promise<Sponsor> {
             });
         });
     });
-};
+}
 
 /**
  * @method: Return list of posts in a given query
@@ -124,7 +124,7 @@ export function getPosts(options: Options): Promise<Posts> {
             resolve(JSON.parse(data));
         }).catch((err) => reject(err));
     });
-};
+}
 
 /**
  * @method: Return list of pending posts by moderator and category in a given query
@@ -149,7 +149,7 @@ export function getPendingPostsByModeratorAndCategory(moderator: string, categor
             reject(err);
         });
     });
-};
+}
 
 /**
  * @method: Return count of pending posts by a given category in a given query
@@ -169,7 +169,7 @@ export function getPendingPostsByCategory(category: string, options: Options): P
             reject(err);
         });
     });
-};
+}
 
 /**
  * @method: Return count of pending posts by a given query
@@ -188,7 +188,7 @@ export function getPendingPosts(options: Options): Promise<number> {
             reject(err);
         });
     });
-};
+}
 
 /**
  * @method: Return list of the pending posts of the given moderator
@@ -210,7 +210,7 @@ export function getPendingPostsByModerator(moderator: string): Promise<Posts> {
             reject(err);
         });
     });
-};
+}
 
 /**
  * @method: Return count of all pending posts
@@ -226,7 +226,7 @@ export function getPendingPostsCount(): Promise<number> {
             reject(err);
         });
     });
-};
+}
 
 /**
  * @method: Return count of all posts
@@ -242,7 +242,7 @@ export function getTotalPostCount(): Promise<number> {
             reject(err);
         });
     });
-};
+}
 
 /**
  * INTERFACES AREA
@@ -251,7 +251,7 @@ export function getTotalPostCount(): Promise<number> {
 export interface Posts {
     total: number;
     results: Array<Post>;
-};
+}
 
 export interface Post {
     moderator: string;
@@ -316,7 +316,7 @@ export interface Post {
     reblogged_by: Array<string>;
     beneficiaries: Array<Object>;
     active_votes: Array<Object>
-};
+}
 
 export interface Options {
     moderator?: string;
@@ -327,12 +327,12 @@ export interface Options {
     filterBy?: string;
     status?: string;
     type?: string;
-};
+}
 
 export interface Sponsors {
     total: number;
     results: Array<Sponsor>;
-};
+}
 
 export interface Sponsor extends Moderator {
     vesting_shares: number;
@@ -342,12 +342,12 @@ export interface Sponsor extends Moderator {
     opted_out: boolean;
     projects: Array<string>;
     json_metadata: Object;
-};
+}
 
 export interface Moderators {
     total: number;
     results: Array<Moderator>;
-};
+}
 
 export interface Moderator {
     _id: string;
@@ -360,4 +360,4 @@ export interface Moderator {
     banned: boolean;
     supermoderator: boolean;
     total_paid_rewards_steem: boolean;
-};
+}
