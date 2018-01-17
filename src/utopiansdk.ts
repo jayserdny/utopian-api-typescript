@@ -36,7 +36,7 @@ const encodeQueryData = function(parameters: any) {
     for (let d in parameters)
       ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(parameters[d]));
     return ret.join('&');
- }
+}
 
 /**
  * @method: Return the moderators of Utopian
