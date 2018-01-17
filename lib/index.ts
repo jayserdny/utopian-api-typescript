@@ -16,7 +16,7 @@ const getURL = function(url: string) {
         // handle http errors
         if (response.statusCode < 200 || response.statusCode > 299) {
            reject(new Error('Failed to load page, status code: ' + response.statusCode));
-         }
+        }
         // temporary data holder
         const body: Array<any> = [];
         // on every content chunk, push it to the data array
@@ -25,11 +25,18 @@ const getURL = function(url: string) {
         response.on('end', () => resolve(body.join('')));
       });
       // handle connection errors of the request
-      request.on('error', (err: Error) => reject(err))
+      request.on('error', (err: Error) => reject(err));
     }).catch((err: Error) => {
         throw err;
-    })
+    });
 };
+
+const encodeQueryData = function(parameters: any) {
+    let ret = [];
+    for (let d in parameters)
+      ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(parameters[d]));
+    return ret.join('&');
+ }
 
 /**
  * @method: Return the moderators of Utopian
@@ -55,7 +62,7 @@ export function getModerator(username: string): Promise<Moderator> {
         getModerators().then((moderators: Moderators) => {
             moderators.results.filter((moderator: Moderator) => {
                 if (moderator.account === username && moderator.banned === false && moderator.reviewed === true) {
-                    resolve(moderator)
+                    resolve(moderator);
                 }
                 else reject(false);
             });
@@ -77,9 +84,9 @@ export function getSponsors(): Promise<Sponsors> {
 };
 
 /**
- * @method: Return the return specific data from a moderator
- * @argument {string}: username of the moderator
- * @returns Promise object array of utopian moderators
+ * @method: Return the return specific data from a Sponsor
+ * @argument {string}: username of the sponsor
+ * @returns Promise object array of utopian sponsor
  */
 export function getSponsor(username: string): Promise<Sponsor> {
    
@@ -87,7 +94,7 @@ export function getSponsor(username: string): Promise<Sponsor> {
         getSponsors().then((sponsors: Sponsors) => {
             sponsors.results.filter((sponsor: Sponsor) => {
                 if (sponsor.account === username && sponsor.banned === false && sponsor.reviewed === true) {
-                    resolve(sponsor)
+                    resolve(sponsor);
                 }
                 else reject(false);
             });
@@ -95,10 +102,112 @@ export function getSponsor(username: string): Promise<Sponsor> {
     });
 };
 
+/**
+ * @method: Return list of posts in a given query
+ * @argument {string}: query for the data
+ * @returns Promise object array of posts
+ */
+export function getPosts(options: Options): Promise<Array<Post>> {
+    if (!options) options = {};
+
+    if (options.limit > 20 || options.limit < 1) {
+        options.limit = 20;
+    }
+
+    if (Object.keys(options).length === 0) {
+        options.limit = 20;
+        options.skip = 0;
+    }
+
+    return new Promise<Array<Post>>((resolve, reject) => {
+        getURL(ENDPOINT_POSTS.concat('?').concat(encodeQueryData(options))).then((data: any) => {
+            resolve(JSON.parse(data));
+        }).catch((err) => reject(err));
+    })
+}
+
+export interface Post {
+    moderator: string;
+    flagged: boolean,
+    reviewed: boolean,
+    pending: boolean,
+    _id: string;
+    id: number,
+    author: string;
+    permlink: string;
+    category: string;
+    parent_author: string;
+    parent_permlink: string;
+    title: string;
+    body: string;
+    json_metadata: { 
+        moderator: Object;
+        links: Array<string>;
+        tags: Array<string>;
+        type: string;
+        platform: string;
+        pullRequests: Array<string>,
+        repository: [Object],
+        format: string;
+        app: string;
+        community: string; 
+    },
+    last_update: string;
+    created: string;
+    active: string;
+    last_payout: string;
+    depth: number;
+    children: number;
+    net_rshares: number;
+    abs_rshares: number;
+    vote_rshares: number;
+    children_abs_rshares: number;
+    cashout_time: string;
+    max_cashout_time: string;
+    total_vote_weight: number;
+    reward_weight: number;
+    total_payout_value: string;
+    curator_payout_value: string;
+    author_rewards: number;
+    net_votes: number;
+    root_comment:number;
+    max_accepted_payout: string;
+    percent_steem_dollars: number;
+    allow_replies: boolean;
+    allow_votes: boolean;
+    allow_curation_rewards: boolean;
+    url: string;
+    root_title: string;
+    pending_payout_value: string;
+    total_pending_payout_value: string;
+    author_reputation: number;
+    promoted: string;
+    body_length: number;
+    __v: number;
+    reserved: boolean;
+    replies: Array<string>;
+    reblogged_by: Array<string>;
+    beneficiaries: Array<Object>;
+    active_votes: Array<Object>
+
+
+}
+
+export interface Options {
+    limit?: number;
+    skip?: number;
+    section?: string;
+    sortBy?: string;
+    filterBy?: string;
+    status?: string;
+    type?: string;
+
+};
+
 export interface Sponsors {
     total: number;
     results: Array<Sponsor>;
-}
+};
 
 export interface Sponsor extends Moderator {
     vesting_shares: number;
@@ -108,12 +217,12 @@ export interface Sponsor extends Moderator {
     opted_out: boolean;
     projects: Array<string>;
     json_metadata: Object;
-}
+};
 
 export interface Moderators {
     total: number;
     results: Array<Moderator>;
-}
+};
 
 export interface Moderator {
     _id: string;
@@ -126,7 +235,4 @@ export interface Moderator {
     banned: boolean;
     supermoderator: boolean;
     total_paid_rewards_steem: boolean;
-}
-
-
-
+};

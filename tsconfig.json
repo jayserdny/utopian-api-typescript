@@ -8,6 +8,7 @@
         "sourceMap": true,
         "outDir": "dist",
         "moduleResolution": "Node",
+        "strictNullChecks": false,
         "declaration": true,
         "lib": ["es2017", "dom"],
         "types" : [ "node" ]
