@@ -7,6 +7,11 @@ const POST_TYPE_DEVELOPMENT = "development";
 const POST_TYPE_BUGHUNTING = "bug-hunting";
 const POST_TYPE_DOCUMENTATION = "documentation";
 
+/**
+ * @method getURL: fetch an api and return its body
+ * @param {string} url: string with the url
+ * @returns Promise with the http response
+ */
 const getURL = function(url: string) {
     // return new pending promise
     return new Promise((resolve, reject) => {
@@ -31,6 +36,11 @@ const getURL = function(url: string) {
     });
 }
 
+/**
+ * @method encodeQueryData: add parameters to an url
+ * @param {Object} parameters: parameters to add to url
+ * @returns url with the parameters added
+ */
 const encodeQueryData = function(parameters: any) {
     let ret = [];
     for (let d in parameters)
@@ -39,7 +49,7 @@ const encodeQueryData = function(parameters: any) {
 }
 
 /**
- * @method: Return the moderators of Utopian
+ * @method getModerators: Return the moderators of Utopian
  * @returns Promise object array of utopian moderators
  */
 export function getModerators(): Promise<Moderators> {
@@ -52,7 +62,7 @@ export function getModerators(): Promise<Moderators> {
 }
 
 /**
- * @method: Return the return specific data from a moderator
+ * @method getModerator: Return the return specific data from a moderator
  * @argument {string}: username of the moderator
  * @returns Promise object array of utopian moderators
  */
@@ -71,7 +81,7 @@ export function getModerator(username: string): Promise<Moderator> {
 }
 
 /**
- * @method: Return the sponsors of Utopian
+ * @method getSponsors: Return the sponsors of Utopian
  * @returns Promise object array of utopian sponsors
  */
 export function getSponsors(): Promise<Sponsors> {
@@ -84,7 +94,7 @@ export function getSponsors(): Promise<Sponsors> {
 }
 
 /**
- * @method: Return the return specific data from a Sponsor
+ * @method getSponsor: Return the return specific data from a Sponsor
  * @argument {string}: username of the sponsor
  * @returns Promise object array of utopian sponsor
  */
@@ -103,7 +113,7 @@ export function getSponsor(username: string): Promise<Sponsor> {
 }
 
 /**
- * @method: Return list of posts in a given query
+ * @method getPosts: Return list of posts in a given query
  * @argument {string}: query for the data
  * @returns Promise object array of posts
  */
@@ -127,7 +137,7 @@ export function getPosts(options: Options): Promise<Posts> {
 }
 
 /**
- * @method: Return list of pending posts by moderator and category in a given query
+ * @method getPendingPostsByModeratorAndCategory: Return list of pending posts by moderator and category in a given query
  * @argument {string} moderator: moderator to query
  * @argument {string} category: category to query
  * @argument {Options} options: query for the posts
@@ -152,7 +162,7 @@ export function getPendingPostsByModeratorAndCategory(moderator: string, categor
 }
 
 /**
- * @method: Return count of pending posts by a given category in a given query
+ * @method getPendingPostsByCategory: Return count of pending posts by a given category in a given query
  * @argument {string} category: category to query
  * @argument {Options} options: query for the posts
  * @returns Promise type number
@@ -172,7 +182,7 @@ export function getPendingPostsByCategory(category: string, options: Options): P
 }
 
 /**
- * @method: Return count of pending posts by a given query
+ * @method getPendingPosts Return count of pending posts by a given query
  * @argument {Options} options: query for the posts
  * @returns Promise type number
  */
@@ -191,7 +201,7 @@ export function getPendingPosts(options: Options): Promise<number> {
 }
 
 /**
- * @method: Return list of the pending posts of the given moderator
+ * @method getPendingPostsByModerator: Return list of the pending posts of the given moderator
  * @argument {string} moderator: moderator to query
  * @returns Promise object array of posts
  */
@@ -213,7 +223,7 @@ export function getPendingPostsByModerator(moderator: string): Promise<Posts> {
 }
 
 /**
- * @method: Return count of all pending posts
+ * @method getPendingPostsCount: Return count of all pending posts
  * @returns Promise type number
  */
 export function getPendingPostsCount(): Promise<number> {
@@ -229,7 +239,7 @@ export function getPendingPostsCount(): Promise<number> {
 }
 
 /**
- * @method: Return count of all posts
+ * @method getTotalPostCount: Return count of all posts
  * @returns Promise type number
  */
 export function getTotalPostCount(): Promise<number> {
